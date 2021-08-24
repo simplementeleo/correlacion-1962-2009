@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Himnario Adventista - Correlación </title>
+    <link rel="stylesheet" href="./vendor/tailwindcss/tailwind.min.css">
+    <link rel="stylesheet" href="./assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <script src="./vendor/scrollreveal.min.js"></script>
+    
+</head>
+
+<body>
+
+    <div id="app">
+        <nav class="fixed top-0 left-0 w-full z-10">
+            <input type="search" class="max-w-lg mx-auto my-8 rounded-full py-3 px-12 bg-secondary search text-gray-100 duration-300 block text-2xl text-center font-bold" placeholder="Buscar correlación de himnos" v-model="search" @keyup="NewPosition()">
+        </nav>
+        <div class="container mx-auto px-12 mt-40">
+            <div class="pb-16">
+
+                <div v-if="Path.length > 0" class="duration-300 flex flex-col items-center relative p-5 mb-12 rounded-xl">
+                    <!-- <h1 class="number text-white"> {{  }} </h1> -->
+                    <div class="w-full">
+                        <div class="text-white">
+                            <h1 class="text-6xl"> {{ Current.new }} <span class="text-gray-700">/</span> {{ Current.old }} </h1>
+                            <h3 class="text-xl mt-10 mb-5"> {{ Current.name }} </h3>
+                        </div>
+                        <div class="controls flex items-center justify">
+                            <p class="text-white mr-3"> {{ CurrentTime || '00:00' }} </p>
+                            <div class="mx-5 progress rounded-full bg-secondary" :style="{ '--i': CurrentDurationPorce + '%' }"></div>
+                            <p class="text-white ml-3"> {{ Duration || '00:00' }} </p>
+                        </div>
+                        <div @click="PlayPause" :class="[isActive ? 'pause' : 'play', 'cursor-pointer', 'fade', 'mt-12', 'mx-auto']"></div>
+                        <!-- <input type="range" name="volumen" v-model="Volume" min="0" max="1" step="0.01" value="0.75" @click="VolumeSize">  -->
+                        <audio ref="audio" id="player" autoplay @timeupdate="UpdateProgress()">
+                            <source :src="source" type="audio/mp3">	
+                        </audio>
+
+                        
+                        
+                        
+                    
+                    </div>
+
+                </div>
+                
+
+
+                <div class="flex gap-10 justify-between">
+                    <h1 class="text-white text-4xl pb-3 border-b border-gray-500 sticky">Nuevo</h1>
+                    <h1 class="text-white text-4xl pb-3 border-b border-gray-500 sticky">Antiguo</h1>
+                </div>
+                <div v-for="(Hym, index) in SearchHyms" :key="index" class="flex gap-10 mt-5 headline">
+                    <div
+                        class="w-full card duration-300 transform hover:-translate-y-1 p-5 rounded-xl flex items-center justify-between">
+                        <h1 class="text-4xl text-gray-300 font-bold">
+                            {{ NumberHym(Hym.HimnarioNuevo.number) }}
+                        </h1>
+                        <h3 class="text-xl ml-10 text-gray-100 uppercase">{{ NameHym(Hym) }}</h3>
+                        <div class="ml-8 actions flex">
+                            <button @click="Load('HNC', Hym)" class="btn text-xs btn-demo rounded-full px-4 py-2 mr-5">
+                                cantado
+                            </button>
+                            <button @click="Load('HNI', Hym)" class="btn text-xs btn-playback rounded-full px-4 py-2">
+                                instrumental
+                            </button>
+
+                        </div>
+                    </div>
+                    <div :class="['card', 'card-ant', 'duration-300', 'transform', 'hover:-translate-y-1', 'p-5', 'rounded-xl', 'flex', 'items-center', 'justify-between']">
+                        <h1 class="text-4xl text-gray-300 font-bold">
+                            {{ NumberHym(Hym.HimnarioAntiguo.number) }}
+                        </h1>
+                        <div class="ml-8 actions">
+                            <button @click="Load('HAI', Hym)" v-if="Hym.HimnarioAntiguo.playback" class="btn text-xs btn-playback rounded-full px-4 py-2">
+                                instrumental
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="./vendor/vue.js"></script>
+    <script src="./assets/js/HimnarioCompletoMasCorrelacion.js"></script>
+    <script src="./assets/js/index.js"></script>
+</body>
+
+</html>
