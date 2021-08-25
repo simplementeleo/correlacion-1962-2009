@@ -34,7 +34,7 @@ const instace = new Vue({
                 behavior: 'smooth'
             })
             this.source = this.Path;
-            this.$refs.audio.play();
+            this.$refs.audio.load();
             this.isActive = true
         },
         NewPosition() {
