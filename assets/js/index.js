@@ -1,8 +1,3 @@
-console.log('Hello JS')
-// window.sr = ScrollReveal();
-// sr.reveal('.headline', {
-//     reset: true
-// })
 const instace = new Vue({
     el: '#app',
     data: {
@@ -24,7 +19,7 @@ const instace = new Vue({
             return number.length == 1 ? '00' + number : number.length == 2 ? '0' + number : number == 'false' ? '---' : number
         },
         NameHym(Hym) {
-            return (Hym.name).slice(5, -4)
+            return (Hym.name).slice(5, -4).toLowerCase().replace('senor','señor')
         },
         Load(status, Hym) {
             const PathHym = status == 'HNC' ? this.MainPath + 'Himnario Nuevo\\Musica\\Cantado\\' + Hym.name : status == 'HNI' ? this.MainPath + 'Himnario Nuevo\\Musica\\Instrumental\\' + Hym.name : this.MainPath + 'Himnario Antiguo\\' + this.NumberHym(Hym.HimnarioAntiguo.number) + Hym.name.slice(3)
